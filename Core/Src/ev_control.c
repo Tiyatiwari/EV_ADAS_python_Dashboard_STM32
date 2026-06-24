@@ -44,7 +44,7 @@ void EV_Init(EV_HandleTypeDef *ev)
     ev->soc        = 100.0f;
     ev->drive_mode = DRIVE_MODE_NORMAL;
     ev->motor_temp = 25.0f;    /* ambient */
-    ev->speed_kmh = 10;
+    ev->speed_kmh = 20;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────── */

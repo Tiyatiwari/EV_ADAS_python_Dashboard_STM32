@@ -40,7 +40,7 @@ typedef struct {
 #define EV_FAULT_SOC_PCT          2.0f
 #define EV_DRAG_COEFF             2.0f
 
-#define EV_SIM_SCALE        50.0f
+#define EV_SIM_SCALE        500.0f
 
 /* Efficiency Wh/km per mode */
 #define EV_EFFICIENCY_ECO    14.0f

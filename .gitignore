@@ -4,6 +4,8 @@ Release/
 .settings/
 .cproject
 .project
+mxproject
+STM32F103C8TX_FLASH.ld
 
 # Build files
 *.o
