@@ -24,10 +24,12 @@
 #include "ev_control.h"
 #include "ultrasonic.h"
 #include "adas.h"
+#include "fault.h"
 
 
 EV_HandleTypeDef ev;
 ADAS_HandleTypeDef adas;
+Fault_HandleTypeDef flt;
 
 
 
@@ -101,6 +103,7 @@ int main(void)
 	  EV_Init(&ev);//intlize ev
 	  HCSR04_Init();//initlize yultrasonic sensor to measure 3 distance
 	  ADAS_Init(& adas);//inlize left right front->400
+	  Fault_Init(& flt);//initlizating fault;
 
 
 
@@ -120,6 +123,8 @@ int main(void)
 
 	          EV_ReadADC(&ev);
 	          EV_Update(&ev, 0.01f);   /* dt = 10ms */
+	          //validating fault flag->soc, motor temo, colliosn and updating
+	          Fault_Check(&flt, &ev, &adas);
 
 	          /* Print every 1000ms (every 10 EV ticks) */
 	          if (++ev_div >= 10) {
@@ -169,7 +174,7 @@ int main(void)
 
 
 	    	  char msg[100];
-	    	  sprintf(msg, "F:%d L:%d R:%d TTC : %d%d.s COL : %d BSD : %d %d ALM : %d \r\n", frnt, left, right, ttcs, ttcd, adas.collision_warn,adas.blindspot_left,adas.blindspot_right, (int)adas.alarm_priority);
+	    	  sprintf(msg, "F:%d L:%d R:%d TTC : %d.%ds COL : %d BSD : %d %d ALM : %d FLT:%02X \r\n", frnt, left, right, ttcs, ttcd, adas.collision_warn,adas.blindspot_left,adas.blindspot_right, (int)adas.alarm_priority, flt.flags);
 
 	    	   HAL_UART_Transmit(&huart1, (uint8_t*)msg, strlen(msg), 100);
 	      }
